@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="close-btn"><i class="fas fa-times"></i></div>
+            <div class="logo">
+                    <img src="img/logo_freemind.png" alt="">
+            </div>
+            <div class="send-cv">
+                    <p>Hãy gửi CV của bạn cho chúng tôi</p>
+            </div>
+        </header>
+        <div class="line"></div>
+        <div class="content">
+            <div class="form-cv">
+                <form id="send" method="POST" action="https://freemind-test.netlify.app/.netlify/functions/test" >
+                    <div class="row align-items-center">
+                        <div class="col-3">
+                          <label  class="col-form-label" >Tên của bạn</label>
+                        </div>
+                        <div class="col-9">
+                          <input type="text" id="name"  class="form-control" placeholder="Ví dụ: Nguyễn Văn A" >
+                          <p class="name_error"></p>
+                        </div>
+                      </div>
+                      <div class="row align-items-center">
+                        <div class="col-3">
+                          <label  class="col-form-label">Số điện thoại</label>
+                          <p class="phone_error"></p>
+                        </div>
+                        <div class="col-9">
+                          <input type="text" id="phone"  class="form-control" placeholder="Số điện thoại liên lạc">
+                        </div>
+                      </div>
+                      <div class="row align-items-center">
+                        <div class="col-3">
+                          <label  class="col-form-label">Vị trí</label>
+                        </div>
+                        <div class="col-9">
+                          <select  name="" id="pos">
+                              <option value="fresher">Fresher Ecommerce Website</option>
+                              <option value="junior">Junior Ecommerce Website</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row align-items-center">
+                        <div class="col-3">
+                          <label  class="col-form-label">Kinh nghiệm làm việc</label>
+                        </div>
+                        <div class="col-9">
+                          <textarea id="exp" class="form-control"  ></textarea>
+                        </div>
+                      </div>
+                      <div class="row align-items-center">
+                        <div class="col-3">
+                        </div>
+                        <div class="col-9">
+          
+                            <label for="files"><p><i class="fas fa-paperclip"></i> Đính kèm tệp hình ảnh</p></label>
+                            <input  id="files" style="visibility:hidden; position: absolute;" type="file">
+                        </div>
+                      </div>
+                      <div class="row align-items-center">
+                        <div class="col-3">
+                          <label  class="col-form-label">Email</label>
+                        </div>
+                        <div class="col-9">
+                          <input type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control" id="email" placeholder="Ex:contact@freemind.vn">
+                        </div>
+                      </div>
+                    <div class="btn-cv">
+                        <button type="submit"> Gửi CV cho Freemind</button>
+                    </div>
+                </form>
+            </div>
+           
+        </div>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+    
+
+      
+      
+      
+
+        $(document).ready(function(){
+          $("#files").change(function() {
+          filename = this.files[0].name
+          console.log(filename);
+        });
+
+
+            $("form#send").submit(function(){
+              var getName = $('input#name').val();
+              var getPhone = $('input#phone').val();
+              var getpos = $('select#pos').val();
+              var getexp = $('textarea#exp').val();
+              var getImage = $('input[type=file]').val().split('\\').pop();;
+              var getEmail = $('input#email').val();
+              var check_mail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+              flag = true;
+
+              console.log(getName);
+              console.log(getPhone);
+              console.log(getpos);
+              console.log(getexp);
+              console.log(getEmail);
+              console.log(getImage);
+
+              $('p.name_error').text("");
+              $('p.phone_error').text("");
+              $('p.pos_error').text("");
+              $('p.exp_error').text("");
+              $('p.mail_error').text("");
+
+              if(getName == ""){
+              $("input#name").css({"background" : "rgba(255, 147, 146, 0.3)", "border" : "2px solid rgb(255, 0, 0, 0.3)"});
+              flag = false;
+              }
+              if(getPhone == "" ){
+                $("input#phone").css({"background" : "rgba(255, 147, 146, 0.3)", "border" : "2px solid rgb(255, 0, 0, 0.3)"});
+              flag = false;
+              }
+             
+              if(getexp == ""){
+                $("textarea#exp").css({"background" : "rgba(255, 147, 146, 0.3)", "border" : "2px solid rgb(255, 0, 0, 0.3)"});
+              flag = false;
+              }
+              if(getEmail == ""){
+                $("input#email").css({"background" : "rgba(255, 147, 146, 0.3)", "border" : "2px solid rgb(255, 0, 0, 0.3)"});
+              flag = false;
+              }
+              // // }else if(!check_mail.test(mail)){
+              // // $('p.name_error').text("vui long nhap mail");
+              // // flag = false;
+              // // }
+              if (flag == true) {
+			alert("Gửi thông tin thành công");
+		} else {
+			alert("gửi thất bại");
+		}
+             
+             
+
+              var data = {name: getName, phone: getPhone, pos: getpos, exp: getexp, image:getImage, email: getEmail};
+
+              fetch('https://freemind-test.netlify.app/.netlify/functions/test', {
+              method: 'POST', 
+              body: JSON.stringify(data), 
+              headers:{
+                'Content-Type': 'application/json'
+              }
+              }).then(res => res.json())
+              .then(response => console.log('Success:', JSON.stringify(response)))
+              .catch(error => console.error('Error:', error))
+
+//               const options = {
+//               method: 'POST',
+//               headers: {'Content-Type': 'application/json'},
+//               body: JSON.stringify({name: getName, phone: getPhone, pos: getpos, exp: getexp, image:getImage, email: getEmail})
+//               };
+
+
+//               fetch('https://freemind-test.netlify.app/.netlify/functions/test', options).then(res => res.json())
+// .then(response => console.log('Success:', JSON.stringify(response)))
+// .catch(error => console.error('Error:', error));
+//               console.log(res);
+              return false;
+            })
+        })
+    </script>
+   
+</body>
+</html>
